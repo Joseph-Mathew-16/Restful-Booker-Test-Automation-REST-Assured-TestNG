@@ -1,0 +1,14 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Restful Booker - Automated Test Suite"
+       parallel="true">
+    <listeners>
+        <listener class-name="utilities.AnnotationTransformer"/>
+        <listener class-name="io.qameta.allure.testng.AllureTestNg"/>
+    </listeners>
+    <test name="Automation Test">
+        <classes>
+            <class name="testcases.CreateBookingTest"></class>
+            <class name="testcases.UpdateBookingTest"></class>
+        </classes>
+    </test>
+</suite>
