@@ -1,11 +1,13 @@
 package endpoints;
 
 import io.restassured.http.ContentType;
+import models.Booking;
+import models.BookingDates;
 import testbase.RestfulBookerBase;
 
 public class BookingEndpoint extends RestfulBookerBase {
 
-    public static String endpoint = "/booking";
+    public static final String endpoint = "/booking";
 
     public BookingEndpoint() {
         setBaseURI(configuration.url);
@@ -22,23 +24,8 @@ public class BookingEndpoint extends RestfulBookerBase {
         return this;
     }
 
-    public BookingEndpoint setAcceptForBookingEndpoint(ContentType contentType) {
-        setAccept(contentType);
-        return this;
-    }
-
     public BookingEndpoint setAcceptForBookingEndpoint(String contentType) {
         setAccept(contentType);
-        return this;
-    }
-
-    public BookingEndpoint setIfMatchHeader(String etag) {
-        setHeader("If-Match", etag);
-        return this;
-    }
-
-    public BookingEndpoint setAuthorizationHeader(String authorizationToken) {
-        setHeader("Cookie", "token=" + authorizationToken);
         return this;
     }
 
@@ -50,13 +37,11 @@ public class BookingEndpoint extends RestfulBookerBase {
     public BookingEndpoint setBookingDetailsInBody(String firstName, String lastName, String totalPrice, String depositPaid, String checkIn, String checkOut, String additionalNeeds) {
         int totalPriceInt = Integer.parseInt(totalPrice);
         Boolean depositPaidBoolean = Boolean.parseBoolean(depositPaid);
-        String requestBody = "{\"firstname\":\"" + firstName + "\",\"lastname\":\"" + lastName + "\",\"totalprice\":" + totalPriceInt + ",\"depositpaid\":" + depositPaidBoolean + ",\"bookingdates\":{\"checkin\":\"" + checkIn + "\",\"checkout\":\"" + checkOut + "\"},\"additionalneeds\":\"" + additionalNeeds + "\"}";
-        setRequestBody(requestBody);
-        return this;
-    }
 
-    public BookingEndpoint setBookingDetailsWithFirstNameOnlyInBody(String firstName) {
-        String requestBody = "{\"firstname\":\"" + firstName + "\"}";
+        BookingDates bookingDates = BookingDates.builder().checkin(checkIn).checkout(checkOut).build();
+        Booking booking = Booking.builder().firstname(firstName).lastname(lastName).totalprice(totalPriceInt).depositpaid(depositPaidBoolean).bookingdates(bookingDates).additionalneeds(additionalNeeds).build();
+
+        String requestBody = booking.writeJson();
         setRequestBody(requestBody);
         return this;
     }

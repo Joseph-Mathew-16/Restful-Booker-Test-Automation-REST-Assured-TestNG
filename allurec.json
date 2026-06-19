@@ -2,7 +2,7 @@
   "name": "Restful Booker Test Report",
   "output": "./allure-report",
   "historyPath": "./history.jsonl",
-  "historyLimit":10,
+  "historyLimit": 10,
   "qualityGate": {
     "rules": [
       {
@@ -18,7 +18,11 @@
         "singleFile": false,
         "reportLanguage": "en",
         "open": false,
-                "publish": true
+        "publish": true,
+        "groupBy": [
+          "suite",
+          "method"
+        ]
       }
     },
     "allure2": {
@@ -54,6 +58,5 @@
     }
   },
   "variables": {
-    
   }
 }

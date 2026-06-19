@@ -7,11 +7,14 @@ import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import lombok.Data;
+import models.Booking;
 import org.testng.Assert;
 import org.testng.Reporter;
 import org.testng.asserts.SoftAssert;
 import utilities.Configuration;
 
+@Data
 public class TestBase {
 
     public static ThreadLocal<RequestSpecBuilder> requestSpecBuilderThreadLocal = new ThreadLocal<RequestSpecBuilder>();
@@ -121,6 +124,16 @@ public class TestBase {
         Allure.step(step);
     }
 
+    public <T> T step(String step, Allure.ThrowableRunnable<T> runnable) {
+        Reporter.log(step, true);
+        return Allure.step(step, runnable);
+    }
+
+    public void step(String step, Allure.ThrowableRunnableVoid runnable) {
+        Reporter.log(step, true);
+        Allure.step(step, runnable);
+    }
+
     @Step("Assert Strings are Equal")
     public void assertStringsEquals(AssertionType assertionType, String actualString, String expectedString) {
         if (assertionType.equals(AssertionType.SOFT)) {
@@ -140,6 +153,19 @@ public class TestBase {
             softAssert.assertEquals(actualBoolean, expectedBoolean);
         } else if (assertionType.equals(AssertionType.HARD)) {
             Assert.assertEquals(actualBoolean, expectedBoolean);
+        } else {
+            String failureMessage = "Invalid Assertion Type provided. Please provide either SOFT or HARD as the assertion type.";
+            step(failureMessage);
+            Assert.fail(failureMessage);
+        }
+    }
+
+    @Step("Assert Strings are Equal")
+    public void assertBookingEquals(AssertionType assertionType, Booking actualBooking, Booking expectedBooking) {
+        if (assertionType.equals(AssertionType.SOFT)) {
+            softAssert.assertEquals(actualBooking, expectedBooking);
+        } else if (assertionType.equals(AssertionType.HARD)) {
+            Assert.assertEquals(actualBooking, expectedBooking);
         } else {
             String failureMessage = "Invalid Assertion Type provided. Please provide either SOFT or HARD as the assertion type.";
             step(failureMessage);
