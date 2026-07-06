@@ -6,9 +6,11 @@ import io.qameta.allure.Severity;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import jdk.jfr.Name;
+import org.testng.Reporter;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import testbase.RestfulBookerBase;
+import utilities.Step;
 
 import static io.qameta.allure.SeverityLevel.NORMAL;
 
@@ -27,10 +29,11 @@ public class CreateBookingTest extends RestfulBookerBase {
     @Owner("Joseph Mathew")
     public void createBookingTest(String expectedFirstName, String expectedLastName, String expectedTotalPrice, String expectedDepositPaid, String expectedCheckIn, String expectedCheckOut, String expectedAdditionalNeeds) {
 
-        String bookingId = step("Booking POST Request", () -> {
+        String bookingId = Step.step("Booking POST Request", () -> {
             Response bookingResponse = new BookingEndpoint().setContentTypeForBookingEndpoint(ContentType.JSON).setBookingDetailsInBody(expectedFirstName, expectedLastName, expectedTotalPrice, expectedDepositPaid, expectedCheckIn, expectedCheckOut, expectedAdditionalNeeds).post();
 
-            step("Verifying Booking POST Request", () -> {
+            Step.step("Verifying Booking POST Request", () -> {
+                Reporter.log(bookingResponse.body().prettyPrint(),true);
                 assertStringsEquals(AssertionType.SOFT, bookingResponse.body().jsonPath().getString("booking.firstname"), expectedFirstName);
                 assertStringsEquals(AssertionType.SOFT, bookingResponse.body().jsonPath().getString("booking.lastname"), expectedLastName);
                 assertStringsEquals(AssertionType.SOFT, bookingResponse.body().jsonPath().getString("booking.totalprice"), expectedTotalPrice);
@@ -43,10 +46,10 @@ public class CreateBookingTest extends RestfulBookerBase {
             return bookingResponse.body().jsonPath().getString("bookingid");
         });
 
-        step("Booking GET Request", () -> {
+        Step.step("Booking GET Request", () -> {
             Response getBookingResponseBody = new BookingEndpoint().setBookingId(bookingId).get();
 
-            step("Verifying Booking GET Request", () -> {
+            Step.step("Verifying Booking GET Request", () -> {
                 assertStringsEquals(AssertionType.SOFT, getBookingResponseBody.body().jsonPath().getString("firstname"), expectedFirstName);
                 assertStringsEquals(AssertionType.SOFT, getBookingResponseBody.body().jsonPath().getString("lastname"), expectedLastName);
                 assertStringsEquals(AssertionType.SOFT, getBookingResponseBody.body().jsonPath().getString("totalprice"), String.valueOf(expectedTotalPrice));

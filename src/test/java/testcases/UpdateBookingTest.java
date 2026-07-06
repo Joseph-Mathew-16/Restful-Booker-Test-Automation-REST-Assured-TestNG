@@ -10,6 +10,7 @@ import jdk.jfr.Name;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import testbase.RestfulBookerBase;
+import utilities.Step;
 
 import static io.qameta.allure.SeverityLevel.NORMAL;
 
@@ -28,11 +29,11 @@ public class UpdateBookingTest extends RestfulBookerBase {
     @Owner("Joseph Mathew")
     public void updateBookingTest(String firstName, String lastName, String totalPrice, String depositPaid, String checkIn, String checkOut, String additionalNeeds, String username, String password, String updatedFirstName, String updatedLastName, String updatedTotalPrice, String updatedDepositPaid, String updatedCheckIn, String updatedCheckOut, String updatedAdditionalNeeds) {
 
-        String bookingId = step("Booking POST request", () -> {
+        String bookingId = Step.step("Booking POST request", () -> {
 
             Response postBookingResponse = new BookingEndpoint().setContentTypeForBookingEndpoint(ContentType.JSON).setBookingDetailsInBody(firstName, lastName, totalPrice, depositPaid, checkIn, checkOut, additionalNeeds).post();
 
-            step("Verifying values in response of POST request", () -> {
+            Step.step("Verifying values in response of POST request", () -> {
                 assertStringsEquals(AssertionType.SOFT, postBookingResponse.body().jsonPath().getString("booking.firstname"), firstName);
                 assertStringsEquals(AssertionType.SOFT, postBookingResponse.body().jsonPath().getString("booking.lastname"), lastName);
                 assertStringsEquals(AssertionType.SOFT, postBookingResponse.body().jsonPath().getString("booking.totalprice"), String.valueOf(totalPrice));
@@ -46,10 +47,10 @@ public class UpdateBookingTest extends RestfulBookerBase {
 
         });
 
-        step("Booking GET request", () -> {
+        Step.step("Booking GET request", () -> {
             Response getBookingResponse = new BookingEndpoint().setBookingId(bookingId).get();
 
-            step("Verifying values in response of GET request", () -> {
+            Step.step("Verifying values in response of GET request", () -> {
                 assertStringsEquals(AssertionType.SOFT, getBookingResponse.body().jsonPath().getString("firstname"), firstName);
                 assertStringsEquals(AssertionType.SOFT, getBookingResponse.body().jsonPath().getString("lastname"), lastName);
                 assertStringsEquals(AssertionType.SOFT, getBookingResponse.body().jsonPath().getString("totalprice"), String.valueOf(totalPrice));
@@ -61,20 +62,20 @@ public class UpdateBookingTest extends RestfulBookerBase {
 
         });
 
-        String authToken = step("Authorization POST Request", () -> {
+        String authToken = Step.step("Authorization POST Request", () -> {
             Response postAuthResponse = new AuthEndpoint().setContentTypeForAuthEndpoint(ContentType.JSON).setUsernameAndPassword(username, password).post();
 
             return postAuthResponse.body().jsonPath().getString("token");
         });
 
-        step("Authorization PUT Request", () -> {
+        Step.step("Authorization PUT Request", () -> {
             Response putBookingResponse = new BookingEndpoint().setBookingId(bookingId)
                     .setContentTypeForBookingEndpoint(ContentType.JSON)
                     .setAcceptForBookingEndpoint("application/json")
                     .setAuthorizationCookie(authToken)
                     .setBookingDetailsInBody(updatedFirstName, updatedLastName, updatedTotalPrice, updatedDepositPaid, updatedCheckIn, updatedCheckOut, updatedAdditionalNeeds).put();
 
-            step("Verifying values in response of PUT request", () -> {
+            Step.step("Verifying values in response of PUT request", () -> {
                 assertStringsEquals(AssertionType.SOFT, putBookingResponse.body().jsonPath().getString("firstname"), updatedFirstName);
                 assertStringsEquals(AssertionType.SOFT, putBookingResponse.body().jsonPath().getString("lastname"), updatedLastName);
                 assertStringsEquals(AssertionType.SOFT, putBookingResponse.body().jsonPath().getString("totalprice"), String.valueOf(updatedTotalPrice));

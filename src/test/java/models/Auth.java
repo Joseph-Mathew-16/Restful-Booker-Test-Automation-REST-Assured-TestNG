@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.extern.jackson.Jacksonized;
 import org.testng.Reporter;
+import utilities.Step;
 
 @Builder
 @Data
@@ -24,8 +25,7 @@ public class Auth {
             json = jsonNode.toPrettyString();
         } catch (Exception exception) {
             String errorMessage = exception.getMessage();
-            // TODO: Fix reporter method.
-            Reporter.log(errorMessage, true);
+            Step.step(errorMessage);
         }
         return json;
     }

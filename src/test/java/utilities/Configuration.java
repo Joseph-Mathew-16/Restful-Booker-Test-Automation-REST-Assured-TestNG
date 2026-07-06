@@ -32,27 +32,19 @@ public class Configuration {
             reportLogLevel = Integer.parseInt(properties.getProperty("report.log-level"));
         } catch (FileNotFoundException fileNotFoundException) {
             String errorMessage = "configuration.properties file could not be opened because the file does not exist or due to some other reason.";
-            testBase.step(errorMessage);
-            //TODO: Change reporter method. Troubleshoot if testBase.step works here.
-            Reporter.log(errorMessage, true);
+            Step.step(errorMessage);
             Assert.fail(errorMessage, fileNotFoundException);
         } catch (IOException ioException) {
             String errorMessage = "An error occurred when reading from the input stream for configuration.properties files.";
-            testBase.step(errorMessage);
-            //TODO: Change reporter method. Troubleshoot if testBase.step works here.
-            Reporter.log(errorMessage, true);
+            Step.step(errorMessage);
             Assert.fail(errorMessage, ioException);
         } catch (IllegalArgumentException illegalArgumentException) {
             String errorMessage = "An error occurred due to the input stream for configuration.properties file containing a malformed Unicode escape sequence";
-            testBase.step(errorMessage);
-            //TODO: Change reporter method. Troubleshoot if testBase.step works here.
-            Reporter.log(errorMessage, true);
+            Step.step(errorMessage);
             Assert.fail(errorMessage, illegalArgumentException);
         } catch (NullPointerException nullPointerException) {
             String errorMessage = "An error occured as the input stream for configuration.properties file is null.";
-            testBase.step(errorMessage);
-            //TODO: Change reporter method. Troubleshoot if testBase.step works here.
-            Reporter.log(errorMessage, true);
+            Step.step(errorMessage);
             Assert.fail(errorMessage, nullPointerException);
         }
     }

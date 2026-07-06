@@ -119,21 +119,6 @@ public class TestBase {
         return response;
     }
 
-    public void step(String step) {
-        Reporter.log(step, true);
-        Allure.step(step);
-    }
-
-    public <T> T step(String step, Allure.ThrowableRunnable<T> runnable) {
-        Reporter.log(step, true);
-        return Allure.step(step, runnable);
-    }
-
-    public void step(String step, Allure.ThrowableRunnableVoid runnable) {
-        Reporter.log(step, true);
-        Allure.step(step, runnable);
-    }
-
     @Step("Assert Strings are Equal")
     public void assertStringsEquals(AssertionType assertionType, String actualString, String expectedString) {
         if (assertionType.equals(AssertionType.SOFT)) {
@@ -142,7 +127,7 @@ public class TestBase {
             Assert.assertEquals(actualString, expectedString);
         } else {
             String failureMessage = "Invalid Assertion Type provided. Please provide either SOFT or HARD as the assertion type.";
-            step(failureMessage);
+            utilities.Step.step(failureMessage);
             Assert.fail(failureMessage);
         }
     }
@@ -155,7 +140,7 @@ public class TestBase {
             Assert.assertEquals(actualBoolean, expectedBoolean);
         } else {
             String failureMessage = "Invalid Assertion Type provided. Please provide either SOFT or HARD as the assertion type.";
-            step(failureMessage);
+            utilities.Step.step(failureMessage);
             Assert.fail(failureMessage);
         }
     }
@@ -168,7 +153,7 @@ public class TestBase {
             Assert.assertEquals(actualBooking, expectedBooking);
         } else {
             String failureMessage = "Invalid Assertion Type provided. Please provide either SOFT or HARD as the assertion type.";
-            step(failureMessage);
+            utilities.Step.step(failureMessage);
             Assert.fail(failureMessage);
         }
     }
