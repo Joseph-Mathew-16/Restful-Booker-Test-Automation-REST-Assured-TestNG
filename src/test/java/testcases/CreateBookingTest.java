@@ -33,7 +33,7 @@ public class CreateBookingTest extends RestfulBookerBase {
             Response bookingResponse = new BookingEndpoint().setContentTypeForBookingEndpoint(ContentType.JSON).setBookingDetailsInBody(expectedFirstName, expectedLastName, expectedTotalPrice, expectedDepositPaid, expectedCheckIn, expectedCheckOut, expectedAdditionalNeeds).post();
 
             Step.step("Verifying Booking POST Request", () -> {
-                Reporter.log(bookingResponse.body().prettyPrint(),true);
+                Reporter.log(bookingResponse.body().prettyPrint(), true);
                 assertStringsEquals(AssertionType.SOFT, bookingResponse.body().jsonPath().getString("booking.firstname"), expectedFirstName);
                 assertStringsEquals(AssertionType.SOFT, bookingResponse.body().jsonPath().getString("booking.lastname"), expectedLastName);
                 assertStringsEquals(AssertionType.SOFT, bookingResponse.body().jsonPath().getString("booking.totalprice"), expectedTotalPrice);

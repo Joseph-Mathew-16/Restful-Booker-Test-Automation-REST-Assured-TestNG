@@ -1,6 +1,5 @@
 package testbase;
 
-import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
@@ -10,7 +9,6 @@ import io.restassured.response.Response;
 import lombok.Data;
 import models.Booking;
 import org.testng.Assert;
-import org.testng.Reporter;
 import org.testng.asserts.SoftAssert;
 import utilities.Configuration;
 
@@ -25,7 +23,7 @@ public class TestBase {
 
     public TestBase() {
         if (configurationThreadLocal.get() == null) {
-            configuration = new Configuration(this);
+            configuration = new Configuration();
             configurationThreadLocal.set(configuration);
         } else {
             configuration = configurationThreadLocal.get();

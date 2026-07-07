@@ -4,7 +4,6 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.testng.Assert;
-import testbase.TestBase;
 import utilities.Step;
 
 import java.io.FileNotFoundException;
@@ -24,7 +23,7 @@ public class CSVFileReader {
      * @param fileName   The CSV file name.
      * @return 2D Object array of CSV data (skips header).
      */
-    public Object[][] csvReader(TestBase testBase, String folderPath, String fileName) {
+    public Object[][] csvReader(String folderPath, String fileName) {
 
         // Prepares the file path. Also sanitizes the path using .normalize() method.
         String path = Paths.get("src", "test", "resources", "test-data", folderPath, fileName).normalize().toString();

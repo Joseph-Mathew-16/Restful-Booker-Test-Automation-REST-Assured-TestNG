@@ -6,11 +6,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.qameta.allure.Allure;
 import lombok.Builder;
 import lombok.Data;
 import lombok.extern.jackson.Jacksonized;
-import org.testng.Reporter;
 import utilities.Step;
 
 @Builder
@@ -38,16 +36,16 @@ public class Booking {
         return json;
     }
 
-    public Booking readJson(String json){
-        try{
-           return new ObjectMapper().readValue(json,Booking.class);
-        }catch(JsonParseException jsonParseException){
+    public Booking readJson(String json) {
+        try {
+            return new ObjectMapper().readValue(json, Booking.class);
+        } catch (JsonParseException _) {
             String errorMessage = "Underlying input contains invalid content of type JsonParser supports (JSON for default case)";
             Step.step(errorMessage);
-        }catch(JsonMappingException jsonMappingException){
+        } catch (JsonMappingException _) {
             String errorMessage = "Error occurred while mapping JSON to Booking object";
             Step.step(errorMessage);
-        }catch (JsonProcessingException jsonProcessingException){
+        } catch (JsonProcessingException _) {
             String errorMessage = "Error occurred while processing JSON";
             Step.step(errorMessage);
         }

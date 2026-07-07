@@ -6,11 +6,11 @@ import testbase.RestfulBookerBase;
 
 public class AuthEndpoint extends RestfulBookerBase {
 
-    public static final String endpoint = "/auth";
+    public static final String ENDPOINT = "/auth";
 
     public AuthEndpoint() {
         setBaseURI(configuration.url);
-        setBasePath(endpoint);
+        setBasePath(ENDPOINT);
     }
 
     public AuthEndpoint setContentTypeForAuthEndpoint(ContentType contentType) {

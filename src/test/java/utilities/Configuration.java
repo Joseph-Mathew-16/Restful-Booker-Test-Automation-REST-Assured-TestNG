@@ -1,8 +1,6 @@
 package utilities;
 
 import org.testng.Assert;
-import org.testng.Reporter;
-import testbase.TestBase;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -20,7 +18,7 @@ public class Configuration {
      * properties from the configuration.properties file and initializes the static
      * variables with the corresponding values.
      */
-    public Configuration(TestBase testBase) {
+    public Configuration() {
 
         Properties properties = new Properties();
         try {

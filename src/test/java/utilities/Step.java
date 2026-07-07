@@ -35,12 +35,12 @@ public class Step {
         Allure.step(name, runnable);
     }
 
-    public static Object step(String name, Allure.ThrowableContextRunnable<Object, Allure.StepContext> runnable){
-        Reporter.log(name,true);
+    public static Object step(String name, Allure.ThrowableContextRunnable<Object, Allure.StepContext> runnable) {
+        Reporter.log(name, true);
         return Allure.step(name, runnable);
     }
 
-    public static <T> T step(Allure.ThrowableContextRunnable<T, Allure.StepContext> runnable){
+    public static <T> T step(Allure.ThrowableContextRunnable<T, Allure.StepContext> runnable) {
         return Allure.step(runnable);
     }
 

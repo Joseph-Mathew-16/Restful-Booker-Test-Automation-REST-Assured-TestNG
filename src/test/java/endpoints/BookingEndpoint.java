@@ -7,15 +7,15 @@ import testbase.RestfulBookerBase;
 
 public class BookingEndpoint extends RestfulBookerBase {
 
-    public static final String endpoint = "/booking";
+    public static final String ENDPOINT = "/booking";
 
     public BookingEndpoint() {
         setBaseURI(configuration.url);
-        setBasePath(endpoint);
+        setBasePath(ENDPOINT);
     }
 
     public BookingEndpoint setBookingId(String bookingId) {
-        setBasePath(endpoint + "/" + bookingId);
+        setBasePath(ENDPOINT + "/" + bookingId);
         return this;
     }
 
